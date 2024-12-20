@@ -1,74 +1,75 @@
-import { signInWithEmailAndPassword, signOut as firebaseSignOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
-import api from "./api";
-
 
 export const login = async (email, password) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-      const token = await user.getIdToken();
-      const userData = {
-        uid: user.uid,
-        token,
-      };
-      localStorage.setItem("user", JSON.stringify(userData));
+    const token = await user.getIdToken();
+    const userData = {
+      uid: user.uid,
+      token,
+    };
+    localStorage.setItem("user", JSON.stringify(userData));
 
-      const response = await api.get("/private/users/getLoggedUser");
-
-      if (response.status === 200) {
-        userData.loggedInUserDetails = response.data;
-        localStorage.setItem("user", JSON.stringify(userData));
-        return {
-          success: true,
-          message:<p>Login feito com sucesso</p>,
-          userData,
-        };
-      } else {
-        localStorage.removeItem("user");
-        return { success: false, message: "Credenciais inválidas." };
-      }
-    } catch (error) {
-      console.error("Erro no login:", error);
-      return { success: false, message: "Credenciais inválidas." };
+    return {
+      success: true,
+      message: <p>Login feito com sucesso</p>,
+      userData,
+    };
+  } catch (error) {
+    console.error("Erro no login:", error);
+    let errorMessage = "Credenciais inválidas.";
+    switch (error.code) {
+      case "auth/wrong-password":
+        errorMessage = "Senha incorreta. Tente novamente.";
+        break;
+      case "auth/user-not-found":
+        errorMessage = "Usuário não encontrado.";
+        break;
+      case "auth/invalid-email":
+        errorMessage = "Email inválido.";
+        break;
+      default:
+        errorMessage = "Erro ao realizar login. Tente novamente.";
+        break;
     }
-  };
-  
-  export const register = async (name, email, password, cpf) => {
-    try {
-      const userData = {
-        name,
-        email,
-        fiscalNumber: cpf,
-        password,
-      };
 
-      const response = await api.post("/public/auth/register", userData);
+    return { success: false, message: errorMessage };
+  }
+};
 
-      if (response.status === 201) {
-        return { success: true };
-      } else {
-        return { success: false, errorCode: response.data.errorCode };
-      }
-    } catch (error) {
-      console.error("Erro no registro:", error.response?.data || error.message);
-      
-     
-      const errorCode = error.response?.data?.errorCode;
+export const register = async (email, password) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-      let customMessage = "";
-      if (errorCode === "EMAIL_EXISTS") {
-        customMessage = "auth/email-already-in-use";
-      } else if (errorCode === "INVALID_CPF") {
-        customMessage = "auth/invalid-cpf";
-      } else {
-        customMessage = "auth/registration-failed"; 
-      }
+    // Após o sucesso no registro, retorna sucesso
+    return { success: true };
+  } catch (error) {
+    console.error("Erro no registro:", error.message);
+    let customMessage = "";
 
-      return {
-        success: false,
-        errorCode: customMessage,
-      };
+    // Ajuste nas mensagens de erro específicas
+    switch (error.code) {
+      case "auth/email-already-in-use":
+        customMessage = "O email já está em uso";
+        break;
+      case "auth/weak-password":
+        customMessage = "A senha deve ter pelo menos 6 caracteres";
+        break;
+      case "auth/invalid-email":
+        customMessage = "O email fornecido é inválido";
+        break;
+      default:
+        customMessage = "Falha no registro. Tente novamente mais tarde";
+        break;
     }
-  };
+
+    return {
+      success: false,
+      errorCode: customMessage,
+    };
+  }
+};
+

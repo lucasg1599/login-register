@@ -49,23 +49,15 @@ const RegisterComponent = () => {
     }
 
     try {
-      const response = await register(name, email, password, cpf);
-
+      const response = await register(email, password);
       if (response.success) {
         setSuccessMessage("Registro feito com sucesso");
         setError("");
         setTimeout(() => {
-          navigate("/login"); // Usando navigate para redirecionar para o login
+          navigate("/login");
         }, 1000);
       } else {
-        switch (response.errorCode) {
-          case "auth/email-already-in-use":
-            setError("Email já existe");
-            break;
-          case "auth/invalid-cpf":
-            setError("CPF invalido");
-            break;
-        }
+        setError(response.errorCode);
         setSuccessMessage("");
       }
     } catch (error) {
@@ -140,19 +132,21 @@ const styles = {
   container: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",  
+    alignItems: "center",
     height: "100vh",
-    backgroundColor: "#f0f0f0",
-    padding: "5px",
+    background: "linear-gradient(-45deg, #2F4F4F, #696969, #808080, #D3D3D3)",
+    animation: "gradient 6s ease infinite",
+    backgroundSize: "400% 400%",
   },
   formContainer: {
-    backgroundColor: "#778899", 
-    alignItems:"center", 
-    justifyContent: "center", 
-    padding: "70px", 
-    borderRadius: "8px",
+    backgroundColor: "#3c3c3c",
+    padding: "40px 30px",
+    borderRadius: "10px",
+    boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+    textAlign: "center",
+    color: "#fff",
     width: "100%",
-    maxWidth: "500px", 
+    maxWidth: "350px",
   },
   form: {
     display: "flex",
@@ -160,11 +154,14 @@ const styles = {
     gap: "15px", 
   },
   input: {
-    padding: "12px",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-    fontSize: "16px",
     width: "100%",
+    padding: "12px",
+    borderRadius: "25px",
+    border: "none",
+    backgroundColor: "#f5f5f5",
+    fontSize: "16px",
+    outline: "none",
+    boxSizing: "border-box",
   },
   containerButton: {
     display: "flex",

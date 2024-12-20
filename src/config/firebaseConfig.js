@@ -1,21 +1,17 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
 
-// Configuração do Firebase
-const FirebaseConfig = {
-  apiKey: "AIzaSyB6kCyPUKTgKvOeN2J2Sb_Do2FTReOvjzM",
-  authDomain: "elevatecowdev.firebaseapp.com",
-  projectId: "elevatecowdev",
-  storageBucket: "elevatecowdev.appspot.com",
-  messagingSenderId: "325906352337",
-  appId: "1:325906352337:web:494d4ee51b99e2281f5df0",
-  measurementId: "G-YLQ4EQP8FG"
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCMd0qphEWjOxmJN-0HrVW31t-4Ys5mALg",
+  authDomain: "login-register-5cbba.firebaseapp.com",
+  projectId: "login-register-5cbba",
+  storageBucket: "login-register-5cbba.firebasestorage.app",
+  messagingSenderId: "91842546455",
+  appId: "1:91842546455:web:055bd72088a4f05dae8552",
+  measurementId: "G-GP75F9LMDK"
 };
 
-// Inicializar o Firebase
-const app = initializeApp(FirebaseConfig);
-const auth = getAuth(app); // Serviço de autenticação
-const analytics = getAnalytics(app); // Google Analytics
-
-export { auth, analytics };
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
