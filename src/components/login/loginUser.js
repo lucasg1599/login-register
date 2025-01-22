@@ -1,6 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
+import styled from "styled-components";
+import LoginButton from "../styledComponents/cadastr/loginButton";
+
+const ButtonLogin = styled(LoginButton)`
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #808080;
+  }
+`;
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -58,9 +75,9 @@ const Login = () => {
               style={styles.input}
             />
           </div>
-          <button type="submit" style={styles.button}>
+          <ButtonLogin type="submit" style={styles.button}>
             Entrar
-          </button>
+          </ButtonLogin>
           {errorMessage && <p style={styles.errorMessage}>{errorMessage}</p>}
           {success && <p style={styles.successMessage}>{success}</p>}
           <p

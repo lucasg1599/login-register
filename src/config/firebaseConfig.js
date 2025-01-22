@@ -3,13 +3,12 @@ import { getAuth } from "firebase/auth";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCMd0qphEWjOxmJN-0HrVW31t-4Ys5mALg",
-  authDomain: "login-register-5cbba.firebaseapp.com",
-  projectId: "login-register-5cbba",
-  storageBucket: "login-register-5cbba.firebasestorage.app",
-  messagingSenderId: "91842546455",
-  appId: "1:91842546455:web:055bd72088a4f05dae8552",
-  measurementId: "G-GP75F9LMDK"
+  apiKey: "AIzaSyAsTxdgtbVoukjtMfwr38MfIxeJhgK4HaQ",
+  authDomain: "loginandregistro-8f622.firebaseapp.com",
+  projectId: "loginandregistro-8f622",
+  storageBucket: "loginandregistro-8f622.firebasestorage.app",
+  messagingSenderId: "79675788385",
+  appId: "1:79675788385:web:ef7f58cfb3b424a3d7ee20"
 };
 
 // Initialize Firebase

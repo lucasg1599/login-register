@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut  } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
 
 export const login = async (email, password) => {
@@ -37,6 +37,16 @@ export const login = async (email, password) => {
     }
 
     return { success: false, message: errorMessage };
+  }
+};
+export const logout = async () => {
+  try {
+    await signOut(auth); 
+    localStorage.removeItem("user");
+    return true;
+  } catch (error) {
+    console.error("Erro ao deslogar:", error.message);
+    return false;
   }
 };
 

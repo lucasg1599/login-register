@@ -117,12 +117,12 @@ const RegisterComponent = () => {
             <RegisterButton type="submit">Registrar</RegisterButton>
           </div>
         </form>
-        <div
+        <p
           style={styles.switchLink}
           onClick={() => navigate("/login")} // Usando navigate para redirecionar
         >
-          Já tem uma conta? Entre
-        </div>
+          Já tem uma conta?<strong> Entre</strong>
+        </p>
       </div>
     </div>
   );
@@ -181,15 +181,10 @@ const styles = {
     margin: "10px 0",
   },
   switchLink: {
-    background: "none",
-    border: "none",
-    color: "black",
-    textDecoration: "underline",
+    color: "#fff",
     cursor: "pointer",
-    fontSize: "16px",
-    padding: 0,
-    margin: "10px 0",
-    textAlign: "center",
+    marginTop: "20px",
+    textDecoration: "underline",
   },
 };
 
