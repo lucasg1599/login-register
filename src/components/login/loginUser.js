@@ -43,9 +43,9 @@ const Login = () => {
       if (response.success) {
         setSuccess("Login feito com sucesso!");
         setErrorMessage("");
-        navigate("/home"); 
+        navigate("/home");
       } else {
-        setErrorMessage(response.message); 
+        setErrorMessage(response.message);
       }
     } catch (error) {
       setErrorMessage("Erro inesperado. Tente novamente.");
@@ -80,10 +80,7 @@ const Login = () => {
           </ButtonLogin>
           {errorMessage && <p style={styles.errorMessage}>{errorMessage}</p>}
           {success && <p style={styles.successMessage}>{success}</p>}
-          <p
-            style={styles.registerLink}
-            onClick={() => navigate("/register")}
-          >
+          <p style={styles.registerLink} onClick={() => navigate("/register")}>
             Não tem uma conta? <strong>Cadastre-se</strong>
           </p>
         </form>
@@ -111,6 +108,7 @@ const styles = {
     color: "#fff",
     width: "100%",
     maxWidth: "300px",
+    transition: "all 0.3s ease-in-out",
   },
   form: {
     display: "flex",
@@ -166,6 +164,7 @@ const styles = {
   },
 };
 
+// Adicionando estilos responsivos
 document.head.insertAdjacentHTML(
   "beforeend",
   `<style>
@@ -173,6 +172,39 @@ document.head.insertAdjacentHTML(
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+    @media (max-width: 768px) {
+      body {
+        font-size: 11px;
+      }
+      .loginBox {
+    padding: 20px 15px !important;
+    max-width: 70% !important; /* Reduzindo o tamanho máximo da caixa */
+    width: 70% !important;    /* Fazendo a caixa ocupar no máximo a largura do dispositivo */
+    margin: 0 auto;            /* Centraliza horizontalmente */
+  }
+      .input {
+        padding: 10px !important;
+        font-size: 14px !important;
+      }
+      .button {
+        padding: 10px !important;
+        font-size: 14px !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .title {
+        font-size: 20px !important;
+      }
+      .loginBox {
+        padding: 15px !important;
+      }
+      .input {
+        font-size: 12px !important;
+      }
+      .button {
+        font-size: 12px !important;
+      }
     }
   </style>`
 );

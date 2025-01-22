@@ -23,7 +23,7 @@ export const login = async (email, password) => {
     let errorMessage = "Credenciais inválidas.";
     switch (error.code) {
       case "auth/wrong-password":
-        errorMessage = "Senha incorreta. Tente novamente.";
+        errorMessage ="Usuário não encontrado. Verifique seu email ou cadastre-se.";
         break;
       case "auth/user-not-found":
         errorMessage = "Usuário não encontrado.";
@@ -34,7 +34,10 @@ export const login = async (email, password) => {
       default:
         errorMessage = "Erro ao realizar login. Tente novamente.";
         break;
-    }
+        case "auth/invalid-credential":
+          errorMessage = "Usuário não encontrado. Verifique seu email ou cadastre-se.";
+          break;
+    };
 
     return { success: false, message: errorMessage };
   }
